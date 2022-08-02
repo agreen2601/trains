@@ -79,6 +79,10 @@ const ViewTrains = () => {
 
   useEffect(() => {
     getTrains();
+    const intervalId = setInterval(() => {
+      getTrains();
+    }, 7000);
+    return () => clearInterval(intervalId);
   }, [getTrains]);
 
   const renderTable = (trainsByType, i) => {
