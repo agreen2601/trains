@@ -1,6 +1,7 @@
 ### Washington D.C Train Data!
 
-You MUST add the file "ApiKey.js" in the "api" folder in order to fetch the data
+You MUST add the file "ApiKey.js" in the "api" folder in order to fetch the data.
+
 Contents should look like this:
 
     const apiKey = {your_api_key_here};
