@@ -3,6 +3,8 @@ import apiKey from "./ApiKey";
 
 const ApiManager = () => {
   const [showFetchError, setShowFetchError] = useState(false);
+  const [showTooManyRequestsError, setShowTooManyRequestsError] =
+    useState(false);
 
   const fetchTrains = () => {
     return fetch(
@@ -15,7 +17,11 @@ const ApiManager = () => {
       }
     )
       .then((r) => {
-        r.status !== 200 && setShowFetchError(true);
+        if (r.status === 429) {
+          setShowTooManyRequestsError(true);
+        } else if (r.status !== 200) {
+          setShowFetchError(true);
+        }
         return r.json();
       })
       .catch(() => setShowFetchError(true));
@@ -23,6 +29,7 @@ const ApiManager = () => {
 
   return {
     showFetchError,
+    showTooManyRequestsError,
     fetchTrains,
   };
 };

@@ -9,7 +9,8 @@ const ViewTrains = () => {
   const [chosenType, setChosenType] = useState("");
   const [chosenCarCount, setChosenCarCount] = useState("");
 
-  const { showFetchError, fetchTrains } = ApiManager();
+  const { showFetchError, showTooManyRequestsError, fetchTrains } =
+    ApiManager();
 
   const getTrains = useCallback(() => {
     fetchTrains().then((r) => {
@@ -143,8 +144,14 @@ const ViewTrains = () => {
   return (
     <>
       <h2 style={{ textAlign: "center" }}>D.C. Train Data</h2>
-      {showFetchError ? (
-        <h3>There was an error fetching the data</h3>
+      {showFetchError || showTooManyRequestsError ? (
+        <h3 className="error">
+          {showFetchError ? (
+            <>There was an error fetching the data</>
+          ) : (
+            <>Too many requests in a fixed time span. Try refreshing the page.</>
+          )}
+        </h3>
       ) : (
         <div>
           {trains && trains?.length > 0 && (
